@@ -56,6 +56,6 @@ def fit_model(X, y):
 	reg.fit(X,y)
 	print str(reg.best_estimator_)
 	return reg.best_estimator_
-
+print("Features: "+str(features.describe()))
 print("Predicted sales prices for client input data:"+"\n"+str(fit_model(features, prices).predict(client_data)))
 
