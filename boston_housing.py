@@ -5,8 +5,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import make_scorer
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeRegressor
+
 import visuals as vs
 
 client_data = [[5,17,15],[4,32,22],[8,3,12]]
@@ -48,9 +50,9 @@ def fit_model(X, y):
 	regressor = DecisionTreeRegressor()
 	parameters = {'max_depth':(1,2,3,4,5,6,7,8,9)}
 	scoring_function = make_scorer(performance_metric,
-	 greater_is_better=True)
-    k_fold = KFold(n_splits=5)
-	reg = GridSearchCV(regressor, parameters, scoring=scoring_function, cv=k_fold)
+	greater_is_better=True)
+	cv = KFold(n_splits=5, shuffle=True, random_state=1)
+	reg = GridSearchCV(regressor, parameters, scoring=scoring_function, cv=cv)
 	reg.fit(X,y)
 	print str(reg.best_estimator_)
 	return reg.best_estimator_
