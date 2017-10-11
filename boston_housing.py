@@ -31,7 +31,8 @@ print("Standard Deviation:"+"\n"+str(std_price))
 
 X_train, X_test, y_train, t_test = train_test_split(prices,
 						features,
-						test_size=0.2)
+						test_size=0.2,
+						random_state=10)
 
 print("training data length: "+str(X_train.shape[0]))
 print("testing data length: "+str(X_test.shape[0]))
@@ -50,7 +51,7 @@ def fit_model(X, y):
 	 greater_is_better=True)
 	reg = GridSearchCV(regressor, parameters, scoring=scoring_function)
 	reg.fit(X,y)
-	print str(reg.best_estimator_)
+	print(str(reg.best_estimator_))
 	return reg.best_estimator_
 
 print("Predicted sales prices for client input data:"+"\n"+str(fit_model(features, prices).predict(client_data)))
