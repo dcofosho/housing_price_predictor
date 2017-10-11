@@ -39,17 +39,18 @@ print("testing data length: "+str(X_test.shape[0]))
 vs.ModelLearning(features, prices)
 
 def performance_metric(y_true, y_predict):
-	error = mean_squared_error(y_true, y_predict)
-	return error
-print("MSE"+"\n"+str(performance_metric(y_train, y_train)))
+	r2 = r2_score(y_true, y_predict)
+	return r2
+print("r2 score"+"\n"+str(performance_metric(y_train, y_train)))
 
 def fit_model(X, y):
 	regressor = DecisionTreeRegressor()
 	parameters = {'max_depth':(1,2,3,4,5,6,7,8,9)}
 	scoring_function = make_scorer(performance_metric,
-	 greater_is_better=False)
+	 greater_is_better=True)
 	reg = GridSearchCV(regressor, parameters, scoring=scoring_function)
 	reg.fit(X,y)
+	print str(reg.best_estimator_)
 	return reg.best_estimator_
 
 print("Predicted sales prices for client input data:"+"\n"+str(fit_model(features, prices).predict(client_data)))
