@@ -50,7 +50,7 @@ def fit_model(X, y):
 	scoring_function = make_scorer(performance_metric,
 	greater_is_better=True)
 	#cv = KFold(n_splits=5, shuffle=True, random_state=1)
-    cv = ShuffleSplit(X.shape[0], n_iter = 10, test_size = 0.20, random_state = 0)
+    	cv = ShuffleSplit(n_splits = 10, test_size = 0.20, train_size=None, random_state = 0)
 	reg = GridSearchCV(regressor, parameters, scoring=scoring_function, cv=cv)
 	reg.fit(X,y)
 	print str(reg.best_estimator_)
